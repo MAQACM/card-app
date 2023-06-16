@@ -14,10 +14,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface CardRepository extends ReactiveSortingRepository<Card,Long>, ReactiveQueryByExampleExecutor<Card> {
-    Mono<Card>findByName(String name);
-    Mono<Card>findByColor(String color);
-    Mono<Card>findByCreatedAt(Timestamp createdAt);
-    Mono<Card>findByStatus(String status);
     Mono<Void>deleteById(long id);
     Mono<Card>save(Card card);
     Mono<Card>findById(long id);
