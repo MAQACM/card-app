@@ -1,0 +1,347 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API for CardAppApplication",
+        "version": "unknown",
+        "description":"Card App API"
+    },
+    "paths": {
+        "/api/v1/card": {
+            "get": {
+                "summary": "Fetch all cards.",
+                "operationId": "fetchCards",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "color",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "created",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/string_date-time"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/CardStatus"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/integer_int32"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/integer_int32"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/SortBy"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Default response",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MultipleCardsResp"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create Card",
+                "operationId": "createCard",
+                "requestBody": {
+                    "content": {
+                        "*/*": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CardCreationBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/200"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update Card",
+                "operationId": "updateCard",
+                "requestBody": {
+                    "content": {
+                        "*/*": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CardCreationBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/200"
+                    }
+                }
+            }
+        },
+        "/api/v1/card/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/integer_int64"
+                    }
+                }
+            ],
+            "get": {
+                "summary": "FetchCard by Id.",
+                "operationId": "FetchById",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/200"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete card.",
+                "operationId": "deleteCard",
+                "responses": {
+                    "200": {
+                        "description": "Default response",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeleteResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "summary": "Login ",
+                "operationId": "signIn",
+                "requestBody": {
+                    "content": {
+                        "*/*": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Default response",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TokenResp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "200": {
+                "description": "Default response",
+                "content": {
+                    "*/*": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Card"
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "string_0": {
+                "minLength": 1,
+                "type": "string"
+            },
+            "string_1": {
+                "maximum": 6,
+                "type": "string"
+            },
+            "string_date-time": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "CardStatus": {
+                "type": "string",
+                "enum": [
+                    "TODO",
+                    "INPROG",
+                    "DONE"
+                ]
+            },
+            "integer_int32": {
+                "type": "integer",
+                "format": "int32"
+            },
+            "SortBy": {
+                "type": "string",
+                "enum": [
+                    "COLOR",
+                    "NAME",
+                    "STATUS",
+                    "CREATED_BY",
+                    "CREATED_AT"
+                ]
+            },
+            "integer_int64": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "Card": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/integer_int32"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/string_0"
+                    },
+                    "color": {
+                        "$ref": "#/components/schemas/string_1"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "$ref": "#/components/schemas/string_date-time"
+                    },
+                    "createdBy": {
+                        "$ref": "#/components/schemas/integer_int64"
+                    }
+                }
+            },
+            "Pagination": {
+                "type": "object",
+                "properties": {
+                    "totalPages": {
+                        "$ref": "#/components/schemas/integer_int32"
+                    },
+                    "pageNumber": {
+                        "$ref": "#/components/schemas/integer_int32"
+                    },
+                    "numberOfElements": {
+                        "$ref": "#/components/schemas/integer_int32"
+                    },
+                    "totalElements": {
+                        "$ref": "#/components/schemas/integer_int64"
+                    }
+                }
+            },
+            "MultipleCardsResp": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Card"
+                        }
+                    },
+                    "pagination": {
+                        "$ref": "#/components/schemas/Pagination"
+                    }
+                }
+            },
+            "CardCreationBody": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/integer_int64"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/string_0"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/CardStatus"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DeleteResponse": {
+                "type": "object",
+                "properties": {
+                    "Status": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "TokenResp": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LoginRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
