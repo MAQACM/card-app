@@ -13,4 +13,6 @@ A card app that allows users to create and manage tasks in the form of cards
 - cd to base folder
 - mvn spring-boot:run
 ##
-Open Api documentation:card-api-doc.yaml
+## Documentation
+- Open Api documentation:card-api-doc.yaml
+- or run the application and open http://localhost:8080/swagger-ui/index.html on your browser
